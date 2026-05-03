@@ -10,8 +10,9 @@
 
 - **バックエンド**: Ruby / Ruby on Rails
 - **フロントエンド**: Next.js (React / TypeScript)
-- **データベース**: TBD
+- **データベース**: MySQL（AWS RDS）
 - **認証**: TBD
+- **インフラ**: AWS
 
 ## 主な機能（予定）
 
