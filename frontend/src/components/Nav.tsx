@@ -24,12 +24,6 @@ export default function Nav() {
       >
         書籍一覧
       </Link>
-      <Link
-        href="/api-health"
-        className="text-sm text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
-      >
-        API Health
-      </Link>
       <div className="ml-auto flex items-center gap-3 text-sm">
         {loading ? (
           <span className="opacity-60">...</span>

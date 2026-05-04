@@ -6,21 +6,32 @@
 
 読んだ本のタイトル・著者・感想・読了日などを記録し、自分の読書履歴を管理できるWebアプリケーションです。
 
+## スクリーンショット
+
+| 書籍一覧 | 書籍を編集 |
+| --- | --- |
+| ![書籍一覧](docs/screenshots/02-books-list.png) | ![書籍を編集](docs/screenshots/04-books-edit.png) |
+
+| ログイン | 書籍を追加 |
+| --- | --- |
+| ![ログイン](docs/screenshots/01-login.png) | ![書籍を追加](docs/screenshots/03-books-new.png) |
+
 ## 技術スタック
 
-- **バックエンド**: Ruby / Ruby on Rails
-- **フロントエンド**: Next.js (React / TypeScript)
-- **データベース**: MySQL（AWS RDS）
-- **認証**: TBD
-- **インフラ**: AWS
+- **バックエンド**: Ruby 3.3 / Ruby on Rails 8.1（API mode）/ JWT 認証
+- **フロントエンド**: Next.js 16（App Router）/ React 19 / TypeScript / Tailwind CSS v4
+- **データベース**: MySQL 8.4（開発: docker / 本番: AWS RDS）
+- **インフラ**: AWS（RDS）
+- **テスト**: RSpec / Vitest / Playwright
+- **CI**: GitHub Actions（並行 3 ジョブ）
 
-## 主な機能（予定）
+## 主な機能
 
+- ユーザー認証（サインアップ / ログイン / ログアウト）
 - 書籍の登録・編集・削除
 - 読書ステータス管理（未読 / 読書中 / 読了）
-- 感想・メモの記録
-- 読書履歴の一覧・検索
-- 読書統計の表示
+- ステータス別の絞り込み
+- 読了日時・著者・メモの記録
 
 ## セットアップ
 
@@ -73,13 +84,30 @@ docker compose logs -f frontend
 
 ```
 readingbook-management/
-├── backend/             # Ruby on Rails 8 (API mode)
+├── backend/             # Ruby on Rails 8.1 (API mode)
+│   ├── app/             # controllers / models / services
+│   ├── spec/            # RSpec
 │   └── Dockerfile.dev
-├── frontend/            # Next.js 15 (App Router / TypeScript)
+├── frontend/            # Next.js 16 (App Router / TypeScript / Tailwind v4)
+│   ├── src/             # app / components / contexts / lib
+│   ├── e2e/             # Playwright
+│   ├── scripts/         # screenshots.mjs など
 │   └── Dockerfile.dev
-├── docker-compose.yml   # backend / frontend / mysql の3サービス
+├── docs/screenshots/    # README用スクリーンショット
+├── .github/workflows/   # CI（rspec / vitest / playwright）
+├── docker-compose.yml   # backend / frontend / mysql の 3 サービス
 └── .env.example
 ```
+
+## スクリーンショットの再生成
+
+`frontend` コンテナ内に Playwright の chromium を入れているので、ローカルでアプリが起動している状態で:
+
+```bash
+docker compose exec frontend npm run screenshots
+```
+
+を実行すると `frontend/tmp/screenshots/` に PNG が出力されます（`docs/screenshots/` にコピーしてコミットしてください）。
 
 ## ライセンス
 
