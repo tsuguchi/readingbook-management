@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       post "auth/login" => "auth#login"
       delete "auth/logout" => "auth#logout"
       get "auth/me" => "auth#me"
+
+      resources :books, only: %i[index show create update destroy]
     end
   end
 end
