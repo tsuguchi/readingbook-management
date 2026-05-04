@@ -42,8 +42,11 @@ export default function LoginPage() {
         <h1 className="mb-6 text-2xl font-bold tracking-tight">ログイン</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1">
-            <label className={labelClass}>メールアドレス</label>
+            <label htmlFor="login-email" className={labelClass}>
+              メールアドレス
+            </label>
             <input
+              id="login-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -52,8 +55,11 @@ export default function LoginPage() {
             />
           </div>
           <div className="space-y-1">
-            <label className={labelClass}>パスワード</label>
+            <label htmlFor="login-password" className={labelClass}>
+              パスワード
+            </label>
             <input
+              id="login-password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

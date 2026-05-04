@@ -43,8 +43,11 @@ export default function SignupPage() {
         <h1 className="mb-6 text-2xl font-bold tracking-tight">サインアップ</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1">
-            <label className={labelClass}>名前</label>
+            <label htmlFor="signup-name" className={labelClass}>
+              名前
+            </label>
             <input
+              id="signup-name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -54,8 +57,11 @@ export default function SignupPage() {
             />
           </div>
           <div className="space-y-1">
-            <label className={labelClass}>メールアドレス</label>
+            <label htmlFor="signup-email" className={labelClass}>
+              メールアドレス
+            </label>
             <input
+              id="signup-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -64,8 +70,11 @@ export default function SignupPage() {
             />
           </div>
           <div className="space-y-1">
-            <label className={labelClass}>パスワード（8文字以上）</label>
+            <label htmlFor="signup-password" className={labelClass}>
+              パスワード（8文字以上）
+            </label>
             <input
+              id="signup-password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
