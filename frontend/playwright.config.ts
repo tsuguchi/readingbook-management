@@ -1,5 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const baseURL = process.env.E2E_BASE_URL ?? "http://localhost:3000";
+
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: false,
@@ -8,7 +10,7 @@ export default defineConfig({
   workers: 1,
   reporter: [["list"]],
   use: {
-    baseURL: process.env.E2E_BASE_URL ?? "http://localhost:3000",
+    baseURL,
     trace: "on-first-retry",
   },
   projects: [
@@ -17,4 +19,14 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
   ],
+  // In CI, start the Next.js dev server before running tests.
+  // Locally we usually run dev in docker-compose, so reuse the existing one.
+  webServer: process.env.CI
+    ? {
+        command: "npm run dev",
+        url: baseURL,
+        timeout: 120_000,
+        reuseExistingServer: false,
+      }
+    : undefined,
 });
