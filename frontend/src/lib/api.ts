@@ -1,4 +1,7 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+// Default to relative paths so requests go through the Next.js rewrite proxy
+// configured in next.config.ts. Set NEXT_PUBLIC_API_URL only if you want to
+// hit the Rails server directly (e.g. an external dashboard).
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 const TOKEN_KEY = "readingbook_token";
 
 export function getToken(): string | null {
