@@ -58,5 +58,5 @@ end
 
 group :test do
   # Convenient ActiveModel / ActiveRecord matchers for RSpec
-  gem "shoulda-matchers", "~> 6.4"
+  gem "shoulda-matchers", "~> 7.0"
 end
