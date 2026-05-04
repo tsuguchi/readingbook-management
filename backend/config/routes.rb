@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get "health" => "health#show"
+
+      post "auth/signup" => "auth#signup"
+      post "auth/login" => "auth#login"
+      delete "auth/logout" => "auth#logout"
+      get "auth/me" => "auth#me"
     end
   end
 end
