@@ -70,10 +70,14 @@ export default function BooksPage() {
       </header>
 
       <div className="mb-6 flex items-center gap-2 text-sm">
-        <label className="text-neutral-600 dark:text-neutral-400">
+        <label
+          htmlFor="status-filter"
+          className="text-neutral-600 dark:text-neutral-400"
+        >
           ステータス:
         </label>
         <select
+          id="status-filter"
           value={filter}
           onChange={(e) => setFilter(e.target.value as "" | BookStatus)}
           className="rounded-md border border-neutral-300 bg-white px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-neutral-700 dark:bg-neutral-900"
