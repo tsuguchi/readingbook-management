@@ -19,6 +19,9 @@
 /blob-report
 /playwright/.cache
 
+# scratch dir for scripts (e.g. screenshots output)
+/tmp
+
 # next.js
 /.next/
 /out/
