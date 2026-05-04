@@ -11,7 +11,7 @@ type Health = {
   db: string;
 };
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
 
 export default function ApiHealthPage() {
   const [health, setHealth] = useState<Health | null>(null);
@@ -43,7 +43,7 @@ export default function ApiHealthPage() {
       <p className="mb-4 text-sm text-neutral-600 dark:text-neutral-400">
         Endpoint:{" "}
         <code className="rounded bg-neutral-100 px-1.5 py-0.5 text-xs dark:bg-neutral-800">
-          {apiUrl}/api/v1/health
+          {apiUrl || ""}/api/v1/health
         </code>
       </p>
       <button

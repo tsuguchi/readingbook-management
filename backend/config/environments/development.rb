@@ -3,6 +3,11 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Allow requests proxied from the Next.js dev server inside Docker
+  # (where the upstream Host header is the docker service name).
+  config.hosts << "backend"
+  config.hosts << /\Abackend(:\d+)?\z/
+
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true
 

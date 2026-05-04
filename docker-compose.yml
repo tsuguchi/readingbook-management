@@ -57,7 +57,10 @@ services:
     ports:
       - "3001:3000"
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:3000
+      # Server-side proxy target used by Next.js rewrites (next.config.ts).
+      # Browser-side requests go to /api/v1/... (relative) and Next.js
+      # forwards them to this target inside the Docker network.
+      NEXT_INTERNAL_API_URL: http://backend:3000
       # Force polling so bind-mount file changes are picked up on Docker for Windows.
       WATCHPACK_POLLING: "true"
       CHOKIDAR_USEPOLLING: "true"
