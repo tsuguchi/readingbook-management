@@ -91,8 +91,11 @@ export default function BookForm({ initial, onSubmit, submitLabel }: Props) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-1">
-        <label className={labelClass}>タイトル</label>
+        <label htmlFor="book-title" className={labelClass}>
+          タイトル
+        </label>
         <input
+          id="book-title"
           type="text"
           required
           maxLength={255}
@@ -102,8 +105,11 @@ export default function BookForm({ initial, onSubmit, submitLabel }: Props) {
         />
       </div>
       <div className="space-y-1">
-        <label className={labelClass}>著者</label>
+        <label htmlFor="book-author" className={labelClass}>
+          著者
+        </label>
         <input
+          id="book-author"
           type="text"
           maxLength={255}
           value={values.author}
@@ -112,8 +118,11 @@ export default function BookForm({ initial, onSubmit, submitLabel }: Props) {
         />
       </div>
       <div className="space-y-1">
-        <label className={labelClass}>ステータス</label>
+        <label htmlFor="book-status" className={labelClass}>
+          ステータス
+        </label>
         <select
+          id="book-status"
           value={values.status}
           onChange={(e) => update("status", e.target.value as BookStatus)}
           className={fieldClass}
@@ -127,8 +136,11 @@ export default function BookForm({ initial, onSubmit, submitLabel }: Props) {
       </div>
       {values.status === "finished" && (
         <div className="space-y-1">
-          <label className={labelClass}>読了日時</label>
+          <label htmlFor="book-finished-at" className={labelClass}>
+            読了日時
+          </label>
           <input
+            id="book-finished-at"
             type="datetime-local"
             value={values.finished_at}
             onChange={(e) => update("finished_at", e.target.value)}
@@ -137,8 +149,11 @@ export default function BookForm({ initial, onSubmit, submitLabel }: Props) {
         </div>
       )}
       <div className="space-y-1">
-        <label className={labelClass}>メモ</label>
+        <label htmlFor="book-memo" className={labelClass}>
+          メモ
+        </label>
         <textarea
+          id="book-memo"
           rows={4}
           value={values.memo}
           onChange={(e) => update("memo", e.target.value)}
