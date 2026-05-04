@@ -6,7 +6,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   apiFetch,
-  STATUS_COLOR,
   STATUS_LABEL,
   type Book,
   type BookStatus,
@@ -18,6 +17,12 @@ const STATUS_OPTIONS: ({ value: ""; label: string } | { value: BookStatus; label
   { value: "reading", label: STATUS_LABEL.reading },
   { value: "finished", label: STATUS_LABEL.finished },
 ];
+
+const STATUS_BADGE_CLASS: Record<BookStatus, string> = {
+  unread: "bg-neutral-500 text-white",
+  reading: "bg-blue-600 text-white",
+  finished: "bg-emerald-600 text-white",
+};
 
 export default function BooksPage() {
   const router = useRouter();
@@ -49,37 +54,29 @@ export default function BooksPage() {
   }, [user, filter, fetchBooks]);
 
   if (authLoading || !user) {
-    return <main style={{ padding: "2rem" }}>...</main>;
+    return <main className="px-4 py-8 text-sm opacity-60">...</main>;
   }
 
   return (
-    <main
-      style={{
-        maxWidth: 800,
-        margin: "2rem auto",
-        padding: "0 1rem",
-        fontFamily: "system-ui, sans-serif",
-      }}
-    >
-      <header
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "1rem",
-        }}
-      >
-        <h1 style={{ margin: 0 }}>書籍一覧</h1>
-        <Link href="/books/new">
-          <button type="button">新規追加</button>
+    <main className="mx-auto w-full max-w-3xl px-4 py-8">
+      <header className="mb-6 flex items-center justify-between">
+        <h1 className="text-2xl font-bold tracking-tight">書籍一覧</h1>
+        <Link
+          href="/books/new"
+          className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+        >
+          + 新規追加
         </Link>
       </header>
 
-      <div style={{ marginBottom: "1rem" }}>
-        ステータス:&nbsp;
+      <div className="mb-6 flex items-center gap-2 text-sm">
+        <label className="text-neutral-600 dark:text-neutral-400">
+          ステータス:
+        </label>
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value as "" | BookStatus)}
+          className="rounded-md border border-neutral-300 bg-white px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-neutral-700 dark:bg-neutral-900"
         >
           {STATUS_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -89,53 +86,46 @@ export default function BooksPage() {
         </select>
       </div>
 
-      {error && <p style={{ color: "crimson" }}>エラー: {error}</p>}
+      {error && (
+        <p className="mb-4 rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/50 dark:text-red-300">
+          エラー: {error}
+        </p>
+      )}
+
       {loading ? (
-        <p>読み込み中...</p>
+        <p className="text-sm opacity-60">読み込み中...</p>
       ) : books.length === 0 ? (
-        <p>該当する書籍はありません。</p>
+        <div className="rounded-lg border border-dashed border-neutral-300 px-6 py-12 text-center text-sm text-neutral-500 dark:border-neutral-700 dark:text-neutral-400">
+          該当する書籍はありません。
+        </div>
       ) : (
-        <ul style={{ listStyle: "none", padding: 0 }}>
+        <ul className="space-y-3">
           {books.map((book) => (
-            <li
-              key={book.id}
-              style={{
-                border: "1px solid rgba(128, 128, 128, 0.4)",
-                borderRadius: 6,
-                padding: "0.75rem 1rem",
-                marginBottom: "0.5rem",
-              }}
-            >
+            <li key={book.id}>
               <Link
                 href={`/books/${book.id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
+                className="block rounded-lg border border-black/5 bg-white p-4 shadow-sm transition hover:border-blue-300 hover:shadow-md dark:border-white/10 dark:bg-neutral-900 dark:hover:border-blue-700"
               >
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <strong>{book.title}</strong>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <h2 className="font-semibold leading-tight">{book.title}</h2>
+                    {book.author && (
+                      <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                        {book.author}
+                      </p>
+                    )}
+                    {book.memo && (
+                      <p className="mt-2 line-clamp-2 text-sm text-neutral-700 dark:text-neutral-300">
+                        {book.memo}
+                      </p>
+                    )}
+                  </div>
                   <span
-                    style={{
-                      padding: "0.15rem 0.6rem",
-                      borderRadius: 999,
-                      background: STATUS_COLOR[book.status].bg,
-                      color: STATUS_COLOR[book.status].fg,
-                      fontSize: "0.8rem",
-                      fontWeight: 600,
-                      whiteSpace: "nowrap",
-                    }}
+                    className={`shrink-0 rounded-full px-3 py-0.5 text-xs font-semibold ${STATUS_BADGE_CLASS[book.status]}`}
                   >
                     {STATUS_LABEL[book.status]}
                   </span>
                 </div>
-                {book.author && (
-                  <div style={{ fontSize: "0.85rem", opacity: 0.7 }}>
-                    {book.author}
-                  </div>
-                )}
-                {book.memo && (
-                  <div style={{ fontSize: "0.85rem", marginTop: "0.25rem" }}>
-                    {book.memo}
-                  </div>
-                )}
               </Link>
             </li>
           ))}

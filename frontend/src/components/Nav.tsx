@@ -14,31 +14,35 @@ export default function Nav() {
   };
 
   return (
-    <nav
-      style={{
-        padding: "0.75rem 1.5rem",
-        borderBottom: "1px solid rgba(128, 128, 128, 0.4)",
-        display: "flex",
-        gap: "1rem",
-        alignItems: "center",
-      }}
-    >
-      <Link href="/" style={{ fontWeight: "bold", textDecoration: "none" }}>
+    <nav className="sticky top-0 z-10 flex items-center gap-4 border-b border-black/10 bg-white/80 px-6 py-3 backdrop-blur dark:border-white/10 dark:bg-neutral-900/80">
+      <Link href="/" className="text-base font-bold tracking-tight">
         📚 ReadingBook
       </Link>
-      <Link href="/books" style={{ textDecoration: "none" }}>
+      <Link
+        href="/books"
+        className="text-sm text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
+      >
         書籍一覧
       </Link>
-      <Link href="/api-health" style={{ textDecoration: "none" }}>
+      <Link
+        href="/api-health"
+        className="text-sm text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
+      >
         API Health
       </Link>
-      <span style={{ marginLeft: "auto" }}>
+      <div className="ml-auto flex items-center gap-3 text-sm">
         {loading ? (
-          <span style={{ opacity: 0.6 }}>...</span>
+          <span className="opacity-60">...</span>
         ) : user ? (
           <>
-            <span style={{ marginRight: "0.75rem" }}>{user.name}</span>
-            <button onClick={handleLogout} type="button">
+            <span className="text-neutral-600 dark:text-neutral-300">
+              {user.name}
+            </span>
+            <button
+              onClick={handleLogout}
+              type="button"
+              className="rounded-md border border-neutral-300 px-3 py-1 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            >
               ログアウト
             </button>
           </>
@@ -46,16 +50,19 @@ export default function Nav() {
           <>
             <Link
               href="/login"
-              style={{ textDecoration: "none", marginRight: "0.5rem" }}
+              className="rounded-md border border-neutral-300 px-3 py-1 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
             >
               ログイン
             </Link>
-            <Link href="/signup" style={{ textDecoration: "none" }}>
+            <Link
+              href="/signup"
+              className="rounded-md bg-blue-600 px-3 py-1 text-white hover:bg-blue-700"
+            >
               サインアップ
             </Link>
           </>
         )}
-      </span>
+      </div>
     </nav>
   );
 }

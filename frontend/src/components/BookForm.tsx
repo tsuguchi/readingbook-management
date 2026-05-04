@@ -8,7 +8,7 @@ export type BookFormValues = {
   author: string;
   status: BookStatus;
   memo: string;
-  finished_at: string; // ISO datetime-local value (yyyy-MM-ddThh:mm)
+  finished_at: string;
 };
 
 const STATUSES: BookStatus[] = ["unread", "reading", "finished"];
@@ -45,6 +45,11 @@ export function valuesToPayload(values: BookFormValues): Record<string, unknown>
         : null,
   };
 }
+
+const fieldClass =
+  "block w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm shadow-sm transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-neutral-700 dark:bg-neutral-900";
+const labelClass =
+  "block text-sm font-medium text-neutral-700 dark:text-neutral-200";
 
 type Props = {
   initial?: BookFormValues;
@@ -84,37 +89,34 @@ export default function BookForm({ initial, onSubmit, submitLabel }: Props) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}
-    >
-      <label>
-        タイトル
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-1">
+        <label className={labelClass}>タイトル</label>
         <input
           type="text"
           required
           maxLength={255}
           value={values.title}
           onChange={(e) => update("title", e.target.value)}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={fieldClass}
         />
-      </label>
-      <label>
-        著者
+      </div>
+      <div className="space-y-1">
+        <label className={labelClass}>著者</label>
         <input
           type="text"
           maxLength={255}
           value={values.author}
           onChange={(e) => update("author", e.target.value)}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={fieldClass}
         />
-      </label>
-      <label>
-        ステータス
+      </div>
+      <div className="space-y-1">
+        <label className={labelClass}>ステータス</label>
         <select
           value={values.status}
           onChange={(e) => update("status", e.target.value as BookStatus)}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={fieldClass}
         >
           {STATUSES.map((s) => (
             <option key={s} value={s}>
@@ -122,29 +124,37 @@ export default function BookForm({ initial, onSubmit, submitLabel }: Props) {
             </option>
           ))}
         </select>
-      </label>
+      </div>
       {values.status === "finished" && (
-        <label>
-          読了日時
+        <div className="space-y-1">
+          <label className={labelClass}>読了日時</label>
           <input
             type="datetime-local"
             value={values.finished_at}
             onChange={(e) => update("finished_at", e.target.value)}
-            style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+            className={fieldClass}
           />
-        </label>
+        </div>
       )}
-      <label>
-        メモ
+      <div className="space-y-1">
+        <label className={labelClass}>メモ</label>
         <textarea
           rows={4}
           value={values.memo}
           onChange={(e) => update("memo", e.target.value)}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={fieldClass}
         />
-      </label>
-      {error && <p style={{ color: "crimson", margin: 0 }}>エラー: {error}</p>}
-      <button type="submit" disabled={submitting} style={{ padding: "0.5rem" }}>
+      </div>
+      {error && (
+        <p className="rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/50 dark:text-red-300">
+          エラー: {error}
+        </p>
+      )}
+      <button
+        type="submit"
+        disabled={submitting}
+        className="inline-flex w-full justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-offset-neutral-900"
+      >
         {submitting ? "送信中..." : submitLabel}
       </button>
     </form>

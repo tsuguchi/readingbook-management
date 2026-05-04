@@ -38,49 +38,28 @@ export default function ApiHealthPage() {
   }, [fetchHealth]);
 
   return (
-    <main
-      style={{
-        fontFamily: "system-ui, sans-serif",
-        padding: "2rem",
-        maxWidth: 720,
-        margin: "0 auto",
-      }}
-    >
-      <h1>API Health Check</h1>
-      <p>
-        Endpoint: <code>{apiUrl}/api/v1/health</code>
+    <main className="mx-auto w-full max-w-xl px-4 py-8">
+      <h1 className="mb-2 text-2xl font-bold tracking-tight">API Health Check</h1>
+      <p className="mb-4 text-sm text-neutral-600 dark:text-neutral-400">
+        Endpoint:{" "}
+        <code className="rounded bg-neutral-100 px-1.5 py-0.5 text-xs dark:bg-neutral-800">
+          {apiUrl}/api/v1/health
+        </code>
       </p>
       <button
         onClick={fetchHealth}
         disabled={loading}
-        style={{
-          padding: "0.5rem 1rem",
-          cursor: loading ? "wait" : "pointer",
-        }}
+        className="mb-4 inline-flex items-center rounded-md border border-neutral-300 bg-white px-4 py-2 text-sm font-medium shadow-sm transition hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-60 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800"
       >
         {loading ? "Loading..." : "Refresh"}
       </button>
       {error && (
-        <pre
-          style={{
-            color: "crimson",
-            padding: "1rem",
-            background: "#fee",
-            marginTop: "1rem",
-            whiteSpace: "pre-wrap",
-          }}
-        >
+        <pre className="rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/50 dark:text-red-300">
           Error: {error}
         </pre>
       )}
       {health && (
-        <pre
-          style={{
-            padding: "1rem",
-            background: "#f4f4f4",
-            marginTop: "1rem",
-          }}
-        >
+        <pre className="rounded-md border border-neutral-200 bg-neutral-50 p-4 text-sm dark:border-neutral-800 dark:bg-neutral-900">
           {JSON.stringify(health, null, 2)}
         </pre>
       )}
