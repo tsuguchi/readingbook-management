@@ -10,8 +10,9 @@
 
 - **バックエンド**: Ruby / Ruby on Rails
 - **フロントエンド**: Next.js (React / TypeScript)
-- **データベース**: TBD
+- **データベース**: MySQL（AWS RDS）
 - **認証**: TBD
+- **インフラ**: AWS
 
 ## 主な機能（予定）
 
@@ -23,35 +24,61 @@
 
 ## セットアップ
 
+開発環境はすべて Docker / Docker Compose で動作します。ホストに Ruby / Node / MySQL を入れる必要はありません。
+
 ### 必要環境
 
-- Ruby: TBD
-- Node.js: TBD
-- Rails: TBD
+- Docker Desktop（Windowsの場合は WSL2 backend）
 
-### バックエンド (Rails API)
+### 手順
 
 ```bash
-cd backend
-bundle install
-rails db:create db:migrate
-rails s
+# 1. 環境変数ファイルを用意
+cp .env.example .env
+
+# 2. コンテナをビルド・起動
+docker compose up --build
+
+# 3. 初回のみ DB を作成・マイグレーション（別ターミナルで）
+docker compose exec backend bundle exec rails db:create db:migrate
 ```
 
-### フロントエンド (Next.js)
+起動すると以下にアクセスできます。
+
+- Rails API: http://localhost:3000
+- Next.js: http://localhost:3001
+- MySQL: `localhost:3306`（ユーザ: `root` / パスワード: `.env` の `MYSQL_ROOT_PASSWORD`）
+
+### よく使うコマンド
 
 ```bash
-cd frontend
-npm install
-npm run dev
+# 停止
+docker compose down
+
+# DBもまっさらに
+docker compose down -v
+
+# Railsコンソール
+docker compose exec backend bundle exec rails console
+
+# マイグレーション生成
+docker compose exec backend bundle exec rails generate migration MigrationName
+
+# ログ確認
+docker compose logs -f backend
+docker compose logs -f frontend
 ```
 
-## ディレクトリ構成（予定）
+## ディレクトリ構成
 
 ```
 readingbook-management/
-├── backend/    # Ruby on Rails (API)
-└── frontend/   # Next.js
+├── backend/             # Ruby on Rails 8 (API mode)
+│   └── Dockerfile.dev
+├── frontend/            # Next.js 15 (App Router / TypeScript)
+│   └── Dockerfile.dev
+├── docker-compose.yml   # backend / frontend / mysql の3サービス
+└── .env.example
 ```
 
 ## ライセンス
