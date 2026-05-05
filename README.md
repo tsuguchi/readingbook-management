@@ -6,6 +6,12 @@
 
 読んだ本のタイトル・著者・感想・読了日などを記録し、自分の読書履歴を管理できるWebアプリケーションです。
 
+## デモ
+
+http://54.249.65.144
+
+AWS EC2 上に [Terraform](infra/envs/emergency/) で構築した一時デプロイ環境です（VPC + 単一 EC2 上で docker compose により backend / frontend / MySQL を同居）。動作確認用なので、確認が済み次第 `terraform destroy` で停止します。
+
 ## スクリーンショット
 
 | 書籍一覧 | 書籍を編集 |
